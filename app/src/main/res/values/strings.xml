@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">TiktacticsSignup-Login</string>
+    <string name="create_account">Create Account</string>
+    <string name="login">Login</string>
+    <string name="app_logo">App logo</string>
+    <string name="click_safe_phish_gone">Click Safe, Phish Gone</string>
+    <string name="register">Register</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="tiktactics_logo">TikTactics Logo</string>
+    <string name="tiktactics">TikTactics</string>
+    <string name="don_t_have_an_account">Don\'t have an account? Click Here to Sign Up</string>
+    <string name="signUp">Sign Up</string>
+    <string name="don_t_have_an_account_create_one">Don\'t have an account? Create One</string>
+    <string name="notifications">Notifications</string>
+    <string name="user_profile">User profile</string>
+</resources>
