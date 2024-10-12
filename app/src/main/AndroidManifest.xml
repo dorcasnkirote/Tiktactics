@@ -13,16 +13,16 @@
         android:theme="@style/Theme.TiktacticsSignupLogin"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".screens.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".Login"
+            android:name=".screens.Login"
             android:exported="false" />
         <activity
-            android:name=".SignUp"
+            android:name=".screens.SignUp"
             android:exported="false" />
         <activity
-            android:name=".LauncherActivity"
+            android:name=".screens.LauncherActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

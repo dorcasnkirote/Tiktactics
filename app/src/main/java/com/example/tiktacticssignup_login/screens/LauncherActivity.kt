@@ -1,4 +1,4 @@
-package com.example.tiktacticssignup_login;
+package com.example.tiktacticssignup_login.screens;
 
 
 
@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.os.Handler
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import com.example.tiktacticssignup_login.R
 
 class LauncherActivity : AppCompatActivity() {
 

@@ -9,8 +9,12 @@ activity = "1.9.2"
 constraintlayout = "2.1.4"
 kotlin = "2.0.20"
 coreKtx = "1.13.1"
+ksp = "1.9.10-1.0.13"
+androidMail = "1.6.7"
 
 [libraries]
+android-activation = { module = "com.sun.mail:android-activation", version.ref = "androidMail" }
+android-mail = { module = "com.sun.mail:android-mail", version.ref = "androidMail" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -23,4 +27,5 @@ core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx"
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 
