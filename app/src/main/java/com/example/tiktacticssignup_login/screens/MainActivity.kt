@@ -1,6 +1,7 @@
 package com.example.tiktacticssignup_login.screens
 
 import android.os.Bundle
+import android.widget.Button
 
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.widget.Toolbar
@@ -8,32 +9,57 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.Insets
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
 import com.example.tiktacticssignup_login.R
+import com.example.tiktacticssignup_login.data.datastore.PreferenceManager
+import com.example.tiktacticssignup_login.workers.IMAPWorker
+import com.google.android.material.textfield.TextInputEditText
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var toolbar: Toolbar
+    private val preferenceManager = PreferenceManager(this)
+    private lateinit var emailAppPasswordTextField: TextInputEditText
+
+    private lateinit var btnInitiateProtection: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_main)
+        emailAppPasswordTextField = findViewById(R.id.appPassword)
+        btnInitiateProtection = findViewById(R.id.btn_initiate_protection)
 
-        toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars: Insets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+        btnInitiateProtection.setOnClickListener {
+            val emailPassword = emailAppPasswordTextField.text.toString().removeSpaces()
+            if(emailPassword.length != 16){
+                emailAppPasswordTextField.error = "Invalid Email App Password"
+                return@setOnClickListener
+            }
+            saveEmailAppPassword(emailPassword)
         }
     }
 
-    override fun onCreateOptionsMenu(menu: android.view.Menu): Boolean {
-        menuInflater.inflate(R.menu.main_menu, menu)
-        return true
+    private fun saveEmailAppPassword(emailPassword: String) {
+        lifecycleScope.launch {
+            preferenceManager.saveUserEmailAppPassword(emailPassword)
+            delay(1000)
+            startBackgroundListeningToEmails()
+        }
+    }
+
+    private fun startBackgroundListeningToEmails() {
+        IMAPWorker.scheduleEmailCheck(applicationContext)
     }
 }
+
+private fun String.removeSpaces(): String {
+    return this.replace(" ", "").trim()
+}
+
+
+
 
 

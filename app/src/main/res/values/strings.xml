@@ -17,4 +17,6 @@
     <string name="don_t_have_an_account_create_one">Don\'t have an account? Create One</string>
     <string name="notifications">Notifications</string>
     <string name="user_profile">User profile</string>
+    <string name="enter_email_app_password">Enter email app password</string>
+    <string name="initiate_protection">Initiate Protection</string>
 </resources>

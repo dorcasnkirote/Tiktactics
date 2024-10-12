@@ -22,7 +22,7 @@ const val TAG = "IMAPLogic"
 class IMAPLogic(
     private val onNewEmails: (List<MailContent>) -> Unit,
     private val emailDao: EmailsDao,
-    private val userEmail: String,
+    userEmail: String,
     private val userEmailAppPassword: String
 ) {
     private val stringMailHost = "imap.gmail.com"
@@ -30,8 +30,7 @@ class IMAPLogic(
     private var store: Store? = null
     private var properties: Properties? = null
 
-    private val stringUserName = "sammuigai880"
-    private val stringPassword = "deuvqlvetrooondz"
+    private val stringUserName = userEmail.getUsernameFromEmail()
 
 
     init {
@@ -40,12 +39,12 @@ class IMAPLogic(
     }
 
 
-    suspend fun connectImap() {
+    private suspend fun connectImap() {
         withContext(Dispatchers.IO) {
             try {
                 session = Session.getDefaultInstance(properties, null)
                 store = session?.getStore("imaps") as Store
-                store!!.connect(stringMailHost, stringUserName, stringPassword)
+                store!!.connect(stringMailHost, stringUserName, userEmailAppPassword)
                 Log.d(TAG, "connectImap: Success")
             } catch (e: Exception) {
                 Log.d(TAG, "connectImap: Failure ${e.message}")
@@ -115,7 +114,10 @@ class IMAPLogic(
         )
         return mailContent
     }
+}
 
+fun String.getUsernameFromEmail(): String {
+    return this.split("@")[0]
 }
 
 data class MailContent(
@@ -124,8 +126,8 @@ data class MailContent(
     val sentDate: String,
     val content: String,
     val messageId: String
-){
-    fun toMailEntity():EmailEntity{
+) {
+    fun toMailEntity(): EmailEntity {
         return EmailEntity(
             from = from,
             subject = subject,

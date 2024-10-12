@@ -40,15 +40,32 @@
         app:layout_constraintVertical_bias="0.0"
         tools:context=".screens.signUp.SignUp">
 
-
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="* To initiate protection from tiktok spam emails provide us with your email app password."
+            android:textColor="#FF0050"/>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:gravity="center"
-            android:text="TikTactics"
-            android:textSize="25sp"
-            android:textStyle="bold" />
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/appPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/enter_email_app_password" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/btn_initiate_protection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#FF0050"
+            android:text="@string/initiate_protection" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

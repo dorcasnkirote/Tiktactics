@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.concurrent.TimeUnit
+import kotlin.math.log
 
 private const val TAG = "IMAPWorker"
 
@@ -38,6 +39,14 @@ class IMAPWorker(appContext: Context, workerParams: WorkerParameters) :
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         try {
+            val email = preferencesManager.getUserEmail().first() ?: ""
+            val userEmailPassword = preferencesManager.getUserEmailAppPassword().first() ?: ""
+
+
+            Log.d(TAG, "doWork User email: $email")
+            Log.d(TAG, "doWork Email Password: $userEmailPassword")
+
+
             val imapLogic = IMAPLogic(
                 onNewEmails = { recentEmails ->
                     for (recentEmail in recentEmails) {
@@ -51,8 +60,8 @@ class IMAPWorker(appContext: Context, workerParams: WorkerParameters) :
                     }
                 },
                 emailDao = EmailDatabase.getInstance(applicationContext).emailsDao(),
-                userEmail = preferencesManager.getUserEmail().first() ?: "",
-                userEmailAppPassword = preferencesManager.getUserEmail().first() ?: ""
+                userEmail = email,
+                userEmailAppPassword = userEmailPassword
             )
             job?.cancel()
             job = launch {
@@ -86,7 +95,7 @@ class IMAPWorker(appContext: Context, workerParams: WorkerParameters) :
 
             WorkManager.getInstance(context).enqueueUniquePeriodicWork(
                 WORK_NAME,
-                ExistingPeriodicWorkPolicy.UPDATE,
+                ExistingPeriodicWorkPolicy.CANCEL_AND_REENQUEUE,
                 emailWorkRequest
             )
         }

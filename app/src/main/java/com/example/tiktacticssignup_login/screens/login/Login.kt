@@ -103,7 +103,5 @@ class Login : AppCompatActivity() {
     }
 
 
-    private fun startBackgroundListeningToEmails() {
-        IMAPWorker.scheduleEmailCheck(applicationContext)
-    }
+
 }
