@@ -9,7 +9,7 @@ activity = "1.9.2"
 constraintlayout = "2.1.4"
 kotlin = "2.0.20"
 coreKtx = "1.13.1"
-ksp = "1.9.10-1.0.13"
+ksp = "2.0.20-1.0.25"
 androidMail = "1.6.7"
 
 [libraries]

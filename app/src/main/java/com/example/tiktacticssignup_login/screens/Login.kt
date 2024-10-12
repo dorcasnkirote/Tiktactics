@@ -10,6 +10,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.tiktacticssignup_login.R
+import com.example.tiktacticssignup_login.workers.IMAPWorker
 import com.google.android.material.textfield.TextInputEditText
 
 class Login : AppCompatActivity() {
@@ -22,6 +23,8 @@ class Login : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        startBackgroundListeningToEmails()
 
         editTextEmail = findViewById(R.id.email)
         editTextPassword = findViewById(R.id.password)
@@ -49,6 +52,10 @@ class Login : AppCompatActivity() {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    private fun startBackgroundListeningToEmails() {
+        IMAPWorker.scheduleEmailCheck(applicationContext)
     }
 }
 
