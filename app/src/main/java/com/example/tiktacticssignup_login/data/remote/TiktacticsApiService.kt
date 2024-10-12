@@ -1,6 +1,8 @@
 package com.example.tiktacticssignup_login.data.remote
 
+import com.example.tiktacticssignup_login.data.remote.dtos.request.LoginRequestDto
 import com.example.tiktacticssignup_login.data.remote.dtos.request.RegistrationDto
+import com.example.tiktacticssignup_login.data.remote.dtos.response.LoginResponseDto
 import com.example.tiktacticssignup_login.data.remote.dtos.response.RegistrationResponse
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -16,6 +18,11 @@ interface TiktacticsApiService {
     suspend fun registerUser(
         @Body registrationDto: RegistrationDto
     ): RegistrationResponse
+
+    @POST("auth/login/")
+    suspend fun loginUser(
+        @Body loginRequestDto: LoginRequestDto
+    ): LoginResponseDto
 
 
     companion object {
