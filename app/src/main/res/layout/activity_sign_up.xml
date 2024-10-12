@@ -41,9 +41,7 @@
             android:gravity="center"
             android:text="TikTactics"
             android:textSize="25sp"
-            android:textStyle="bold"
-
-            />
+            android:textStyle="bold" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -99,6 +97,15 @@
             android:layout_height="wrap_content"
             android:backgroundTint="#FF0050"
             android:text="@string/sign_up" />
+
+        <ProgressBar
+            android:id="@+id/pb_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateTint="#FF0050"
+            android:visibility="gone" />
+
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
