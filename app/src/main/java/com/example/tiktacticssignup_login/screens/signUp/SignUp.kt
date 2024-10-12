@@ -1,4 +1,4 @@
-package com.example.tiktacticssignup_login.screens;
+package com.example.tiktacticssignup_login.screens.signUp;
 
 import android.os.Bundle
 import android.text.TextUtils

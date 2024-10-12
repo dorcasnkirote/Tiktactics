@@ -1,4 +1,4 @@
-package com.example.tiktacticssignup_login.screens;
+package com.example.tiktacticssignup_login.screens.login;
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,6 +10,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.tiktacticssignup_login.R
+import com.example.tiktacticssignup_login.screens.MainActivity
+import com.example.tiktacticssignup_login.screens.signUp.SignUp
 import com.example.tiktacticssignup_login.workers.IMAPWorker
 import com.google.android.material.textfield.TextInputEditText
 

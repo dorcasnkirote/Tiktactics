@@ -21,12 +21,15 @@ const val TAG = "IMAPLogic"
 
 class IMAPLogic(
     private val onNewEmails: (List<MailContent>) -> Unit,
-    private val emailDao: EmailsDao
+    private val emailDao: EmailsDao,
+    private val userEmail: String,
+    private val userEmailAppPassword: String
 ) {
     private val stringMailHost = "imap.gmail.com"
     private var session: Session? = null
     private var store: Store? = null
     private var properties: Properties? = null
+
     private val stringUserName = "sammuigai880"
     private val stringPassword = "deuvqlvetrooondz"
 

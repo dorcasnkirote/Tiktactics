@@ -10,6 +10,7 @@ import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
+import com.example.tiktacticssignup_login.data.datastore.PreferenceManager
 import com.example.tiktacticssignup_login.data.local.EmailDatabase
 import com.kamilimu.tiktaktics.utils.IMAPLogic
 import com.example.tiktacticssignup_login.utils.NotificationUtil
@@ -17,6 +18,7 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.concurrent.TimeUnit
@@ -30,6 +32,8 @@ class IMAPWorker(appContext: Context, workerParams: WorkerParameters) :
 
 
     private var job: Job? = null
+
+    private val preferencesManager = PreferenceManager(applicationContext)
 
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
@@ -46,7 +50,9 @@ class IMAPWorker(appContext: Context, workerParams: WorkerParameters) :
                         Log.d(TAG, "Email from: ${recentEmail.from}")
                     }
                 },
-                emailDao = EmailDatabase.getInstance(applicationContext).emailsDao()
+                emailDao = EmailDatabase.getInstance(applicationContext).emailsDao(),
+                userEmail = preferencesManager.getUserEmail().first() ?: "",
+                userEmailAppPassword = preferencesManager.getUserEmail().first() ?: ""
             )
             job?.cancel()
             job = launch {

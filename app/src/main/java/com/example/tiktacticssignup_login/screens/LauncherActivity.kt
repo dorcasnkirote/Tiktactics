@@ -8,6 +8,7 @@ import android.os.Handler
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.example.tiktacticssignup_login.R
+import com.example.tiktacticssignup_login.screens.login.Login
 
 class LauncherActivity : AppCompatActivity() {
 

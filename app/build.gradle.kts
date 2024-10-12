@@ -57,6 +57,8 @@ dependencies {
     implementation(libs.android.mail)
     implementation(libs.android.activation)
 
+    implementation("androidx.lifecycle:lifecycle-viewmodel:2.8.6")
+
     // WorkManager
     implementation("androidx.work:work-runtime-ktx:2.9.0")
     // Jetpack Datastore
@@ -70,5 +72,5 @@ dependencies {
 
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 }

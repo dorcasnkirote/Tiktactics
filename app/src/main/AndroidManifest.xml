@@ -20,10 +20,10 @@
             android:name=".screens.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".screens.Login"
+            android:name=".screens.login.Login"
             android:exported="false" />
         <activity
-            android:name=".screens.SignUp"
+            android:name=".screens.signUp.SignUp"
             android:exported="false" />
         <activity
             android:name=".screens.LauncherActivity"
