@@ -12,11 +12,15 @@ import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import com.example.tiktacticssignup_login.data.datastore.PreferenceManager
 import com.example.tiktacticssignup_login.data.local.EmailDatabase
+import com.example.tiktacticssignup_login.data.remote.TiktacticsApiService
+import com.example.tiktacticssignup_login.data.remote.dtos.request.EmailsDto
 import com.kamilimu.tiktaktics.utils.IMAPLogic
 import com.example.tiktacticssignup_login.utils.NotificationUtil
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -30,6 +34,8 @@ class IMAPWorker(appContext: Context, workerParams: WorkerParameters) :
     CoroutineWorker(appContext, workerParams) {
 
     private val notificationUtil = NotificationUtil(applicationContext)
+
+    private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
 
     private var job: Job? = null
@@ -46,17 +52,27 @@ class IMAPWorker(appContext: Context, workerParams: WorkerParameters) :
             Log.d(TAG, "doWork User email: $email")
             Log.d(TAG, "doWork Email Password: $userEmailPassword")
 
+            val spamEmailsDao = EmailDatabase.getInstance(applicationContext).spamEmailsDao()
 
             val imapLogic = IMAPLogic(
                 onNewEmails = { recentEmails ->
-                    for (recentEmail in recentEmails) {
-                        notificationUtil.showNotification(
-                            recentEmail.messageId.hashCode(),
-                            recentEmail.subject,
-                            "You've got an email from: ${recentEmail.from}"
-                        )
-
-                        Log.d(TAG, "Email from: ${recentEmail.from}")
+                    val emails = recentEmails.map { mailContent ->
+                        mailContent.toEmailDto()
+                    }
+                    val emailsDto = EmailsDto(emails)
+                    scope.launch {
+                        val apiService = TiktacticsApiService.getInstance(preferencesManager.getAuthToken().first())
+                        val spamEmailsDto = apiService.startDetection(emailsDto)
+                        spamEmailsDao.saveSpamEmails(spamEmailsDto.spamEmailDtos.map { it.toSpamEmailEntity() })
+                        if (spamEmailsDto.spamEmailDtos.isNotEmpty()) {
+                            for (spamEmailDto in spamEmailsDto.spamEmailDtos) {
+                                notificationUtil.showNotification(
+                                    title = "New Spam Email Detected from ${spamEmailDto.sender}",
+                                    message = spamEmailDto.subject,
+                                    notificationId = spamEmailDto.id
+                                )
+                            }
+                        }
                     }
                 },
                 emailDao = EmailDatabase.getInstance(applicationContext).emailsDao(),

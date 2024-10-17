@@ -71,8 +71,10 @@ class Login : AppCompatActivity() {
                 when (event) {
                     is OneTimeEvents.Navigate -> {
                         val email = editTextEmail.text.toString()
+                        val refreshToken = event.loginResponseDto.refresh
                         preferenceManager.saveAuthToken(event.loginResponseDto.access)
                         preferenceManager.saveUserEmail(email)
+                        preferenceManager.saveRefreshToken(refreshToken)
 
                         val intent = Intent(this@Login, MainActivity::class.java)
                         startActivity(intent)

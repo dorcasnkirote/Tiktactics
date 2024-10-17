@@ -32,9 +32,17 @@ class PreferenceManager(
         }
     }
 
+    suspend fun saveRefreshToken(refreshToken: String) {
+        context.dataStore.edit { preferences ->
+            preferences[PreferencesKey.REFRESH_TOKEN] = refreshToken
+        }
+    }
+
     fun getUserEmail(): Flow<String?> = context.dataStore.data.map { preferences -> preferences[PreferencesKey.EMAIL] }
 
     fun getUserEmailAppPassword(): Flow<String?> = context.dataStore.data.map { preferences -> preferences[PreferencesKey.EMAIL_APP_PASSWORD] }
 
     fun getAuthToken(): Flow<String?> = context.dataStore.data.map { preferences -> preferences[PreferencesKey.AUTH_TOKEN] }
+
+    fun getRefreshToken(): Flow<String?> = context.dataStore.data.map { preferences -> preferences[PreferencesKey.REFRESH_TOKEN] }
 }

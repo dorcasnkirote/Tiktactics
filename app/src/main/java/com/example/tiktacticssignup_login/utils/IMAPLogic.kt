@@ -2,6 +2,7 @@ package com.kamilimu.tiktaktics.utils
 
 import android.util.Log
 import com.example.tiktacticssignup_login.data.local.EmailsDao
+import com.example.tiktacticssignup_login.data.remote.dtos.request.EmailDto
 import com.kamilimu.tiktaktics.data.local.entities.EmailEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -15,7 +16,9 @@ import javax.mail.Message
 import javax.mail.Session
 import javax.mail.Store
 import javax.mail.internet.MimeMessage
-
+import javax.mail.*
+import javax.mail.internet.*
+import java.io.IOException
 
 const val TAG = "IMAPLogic"
 
@@ -104,12 +107,19 @@ class IMAPLogic(
     }
 
     private fun processEmail(message: MimeMessage): MailContent {
-        val messageBody = message.content.toString()
+        val messageBody = message.content
+        var content = ""
+        if (messageBody is MimeMultipart) {
+            content = processMimeMultipart(messageBody)
+        } else {
+            content = messageBody.toString()
+        }
+
         val mailContent = MailContent(
             from = message.from[0].toString(),
             subject = message.subject,
             sentDate = message.sentDate.toString(),
-            content = messageBody,
+            content = content,
             messageId = message.messageID
         )
         return mailContent
@@ -136,6 +146,42 @@ data class MailContent(
             messageId = messageId
         )
     }
+
+    fun toEmailDto(): EmailDto {
+        return EmailDto(
+            from = from,
+            subject = subject,
+            body = content,
+            messageID = messageId
+        )
+    }
 }
+
+
+fun processMimeMultipart(multipart: Multipart): String {
+    val result = StringBuilder()
+
+    for (i in 0 until multipart.count) {
+        val bodyPart = multipart.getBodyPart(i)
+
+        when {
+            bodyPart.isMimeType("text/plain") -> {
+                result.append("Text: ").append(bodyPart.content.toString()).append("\n")
+            }
+
+            bodyPart.isMimeType("text/html") -> {
+                result.append("HTML: ").append(bodyPart.content.toString()).append("\n")
+            }
+
+            else -> {
+                result.append("Other content type: ").append(bodyPart.contentType).append("\n")
+                // Handle attachments or other types of content here if needed
+            }
+        }
+    }
+
+    return result.toString()
+}
+
 
 
