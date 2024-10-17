@@ -14,6 +14,7 @@ import com.example.tiktacticssignup_login.data.datastore.PreferenceManager
 import com.example.tiktacticssignup_login.data.local.EmailDatabase
 import com.example.tiktacticssignup_login.data.remote.TiktacticsApiService
 import com.example.tiktacticssignup_login.data.remote.dtos.request.EmailsDto
+import com.example.tiktacticssignup_login.data.remote.dtos.request.RefreshTokenRequestDto
 import com.kamilimu.tiktaktics.utils.IMAPLogic
 import com.example.tiktacticssignup_login.utils.NotificationUtil
 import kotlinx.coroutines.CancellationException
@@ -21,6 +22,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -61,7 +63,17 @@ class IMAPWorker(appContext: Context, workerParams: WorkerParameters) :
                     }
                     val emailsDto = EmailsDto(emails)
                     scope.launch {
-                        val apiService = TiktacticsApiService.getInstance(preferencesManager.getAuthToken().first())
+
+                        val refreshToken = preferencesManager.getRefreshToken().first() ?: ""
+                        val refreshTokenResponseDto = TiktacticsApiService.getInstance()
+                            .refreshToken(RefreshTokenRequestDto(refresh = refreshToken))
+                        preferencesManager.saveAuthToken(refreshTokenResponseDto.access)
+                        preferencesManager.saveRefreshToken(refreshTokenResponseDto.refresh)
+
+                        delay(1600)
+                        val apiService = TiktacticsApiService.getInstance(
+                            preferencesManager.getAuthToken().first()
+                        )
                         val spamEmailsDto = apiService.startDetection(emailsDto)
                         spamEmailsDao.saveSpamEmails(spamEmailsDto.spamEmailDtos.map { it.toSpamEmailEntity() })
                         if (spamEmailsDto.spamEmailDtos.isNotEmpty()) {

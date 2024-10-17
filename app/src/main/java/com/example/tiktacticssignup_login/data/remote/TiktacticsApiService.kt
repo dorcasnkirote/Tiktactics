@@ -2,8 +2,10 @@ package com.example.tiktacticssignup_login.data.remote
 
 import com.example.tiktacticssignup_login.data.remote.dtos.request.EmailsDto
 import com.example.tiktacticssignup_login.data.remote.dtos.request.LoginRequestDto
+import com.example.tiktacticssignup_login.data.remote.dtos.request.RefreshTokenRequestDto
 import com.example.tiktacticssignup_login.data.remote.dtos.request.RegistrationDto
 import com.example.tiktacticssignup_login.data.remote.dtos.response.LoginResponseDto
+import com.example.tiktacticssignup_login.data.remote.dtos.response.RefreshTokenResponseDto
 import com.example.tiktacticssignup_login.data.remote.dtos.response.RegistrationResponse
 import com.example.tiktacticssignup_login.data.remote.dtos.response.SpamEmailsDto
 import okhttp3.Interceptor
@@ -32,10 +34,14 @@ interface TiktacticsApiService {
         @Body emails: EmailsDto
     ): SpamEmailsDto
 
+    @POST("api/token/refresh/")
+    suspend fun refreshToken(
+        @Body refreshTokenRequestDto: RefreshTokenRequestDto
+    ): RefreshTokenResponseDto
+
 
     companion object {
-        private fun httpLoggingInterceptor() =
-            HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+        private fun httpLoggingInterceptor() = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
 
         private fun okhttpClient(authToken: String? = null): OkHttpClient {
             return if (authToken != null) OkHttpClient.Builder()
