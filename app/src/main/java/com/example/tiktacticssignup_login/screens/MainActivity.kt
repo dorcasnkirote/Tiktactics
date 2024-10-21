@@ -1,5 +1,6 @@
 package com.example.tiktacticssignup_login.screens
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 
@@ -12,6 +13,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import com.example.tiktacticssignup_login.R
 import com.example.tiktacticssignup_login.data.datastore.PreferenceManager
+import com.example.tiktacticssignup_login.screens.emailList.EmailList
 import com.example.tiktacticssignup_login.workers.IMAPWorker
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.delay
@@ -39,6 +41,8 @@ class MainActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
             saveEmailAppPassword(emailPassword)
+            val intent = Intent(this, EmailList::class.java)
+            startActivity(intent)
         }
     }
 

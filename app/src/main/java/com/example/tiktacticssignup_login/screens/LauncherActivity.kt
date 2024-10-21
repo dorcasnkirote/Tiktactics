@@ -8,6 +8,7 @@ import android.os.Handler
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.example.tiktacticssignup_login.R
+import com.example.tiktacticssignup_login.screens.emailList.EmailList
 import com.example.tiktacticssignup_login.screens.login.Login
 
 class LauncherActivity : AppCompatActivity() {
@@ -18,7 +19,7 @@ class LauncherActivity : AppCompatActivity() {
         setContentView(R.layout.activity_launcher)
 
         Handler().postDelayed({
-                val intent = Intent(this, Login::class.java)
+                val intent = Intent(this, EmailList::class.java)
         startActivity(intent)
 
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
