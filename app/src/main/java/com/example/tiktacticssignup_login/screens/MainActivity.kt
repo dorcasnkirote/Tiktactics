@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         emailAppPasswordTextField = findViewById(R.id.appPassword)
-        btnInitiateProtection = findViewById(R.id.btn_initiate_protection)
+        btnInitiateProtection = findViewById(R.id.btnInitiateProtection)
 
 
         btnInitiateProtection.setOnClickListener {

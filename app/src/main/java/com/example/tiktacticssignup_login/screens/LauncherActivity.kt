@@ -19,7 +19,8 @@ class LauncherActivity : AppCompatActivity() {
         setContentView(R.layout.activity_launcher)
 
         Handler().postDelayed({
-                val intent = Intent(this, EmailList::class.java)
+
+                val intent = Intent(this, Login::class.java)
         startActivity(intent)
 
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out)

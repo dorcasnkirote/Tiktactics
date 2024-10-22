@@ -17,6 +17,19 @@
     <string name="don_t_have_an_account_create_one">Don\'t have an account? Create One</string>
     <string name="notifications">Notifications</string>
     <string name="user_profile">User profile</string>
-    <string name="enter_email_app_password">Enter email app password</string>
     <string name="initiate_protection">Initiate Protection</string>
+    <string name="why_do_we_need_an_app_password">Why do we need an app password?</string>
+    <string name="to_protect_your_inbox_from_tiktok_spam_we_need_secure_access_to_filter_unwanted_emails_an_app_password_is_a_safer_alternative_to_your_main_password">To protect your inbox from Tiktok spam we need secure access to filter unwanted emails an app password is a safer alternative to your main password</string>
+    <string name="how_to_get_your_app_password">How to get your app password</string>
+    <string name="for_gmail_users">For Gmail Users:</string>
+    <string name="_1_go_to_google_account_settings">1. Go to google account settings</string>
+    <string name="_2_select_security">2. Select Security</string>
+    <string name="enable_2_step_verification_if_not_already">3. Enable 2-step verification if not already</string>
+    <string name="_4_select_app_passwords">4. Select App passwords</string>
+    <string name="enter_email_app_password">Enter email app password</string>
+    <string name="initiate_protection_now">Initiate Protection Now</string>
+    <string name="protection_active">Protection Active</string>
+    <string name="email_protection_is_enabled">Email protection is enabled</string>
+    <string name="no_suspicious_emails">No Suspicious Emails</string>
+    <string name="detected_emails_will_appear_here">Detected emails will appear here</string>
 </resources>
