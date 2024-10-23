@@ -128,6 +128,4 @@ class IMAPWorker(appContext: Context, workerParams: WorkerParameters) :
             )
         }
     }
-
-
 }
