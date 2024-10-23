@@ -62,6 +62,7 @@ interface TiktacticsApiService {
         private fun authInterceptor(token: String) = Interceptor { chain ->
             val request = chain.request().newBuilder()
                 .addHeader("Authorization", "Bearer $token")
+                .addHeader("Content-Type", "application/json")
                 .build()
             chain.proceed(request)
         }
